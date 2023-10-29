@@ -5,6 +5,8 @@ Zum starten muss die Solution ausgeführt werden (ctrl + F5) und schließend mus
 Anschließend kann die index.hmtl geöffnet werden.
 
 #Testen
+Beim Öffnen der Webseite wird zuerst eine HTTP-Anfrage geschickt welche die Datenbank mit ein paar Produkten initialisiert.
+
 Auf der Webseite können Artikel mittels "Neuen Eintrag erstellen" hinzugefügt werden. In der Tabelle können diese Bearbeitet oder gelöscht werden.
 Um die Anzahl der HTTP-Anfragen zu reduzieren wird bei den Statuscodes 2xx die Daten lokal gelöscht oder hinzugefügt ohne die gesamte Liste zu aktualisieren.
 Oben rechts befindet sich ein "Aktualisieren" Knopf welcher eine GET-Anfrage sendet und eine aktuelle Liste vom Server abruft.
