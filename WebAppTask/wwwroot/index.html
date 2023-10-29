@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>WebApplication</title>
+    <link rel="stylesheet" href="css/StyleSheet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header id="topNav">
+            <div>
+                <input id="idSearchInput" v-model="searchId" type="number" placeholder="ID" oninput="handleSearchIdInput(this.value) ? this.style.backgroundColor = 'white' : this.style.backgroundColor = 'lightcoral'" />
+                <button id="showEntry" v-on:click="showEntry">Suche</button>
+                <button id="updateBtn" onclick="fetchProducts()">Aktualisieren</button>
+            </div>
+        </header>
+        <dialog id="dialog">
+            <form id="inputForm">
+                <div class="formHeader">
+                    <div id="closeBtnDiv"> <button id="cancelBtn" type="button" v-on:click="cancelDialog">&#10006</button></div>
+                    <h2 id="formTitle">Produktdetails</h2>
+                </div>
+                <div id="idLabelDiv">
+                    <label id="idLabel" v-if="formEntry.id">ID: {{formEntry.id}}</label>
+                </div>
+                <label id="nameLabel">Name</label>
+                <input id="nameInput" ref="nameInput" name="name" v-model="formEntry.name" oninput="this.value != '' ? this.style.backgroundColor = '' : this.style.backgroundColor='lightcoral'" />
+                <label id="priceLabel">Preis</label>
+                <input id="priceInput" ref="priceInput" type="number" name="price" v-model="formEntry.price" oninput="validateCurrencyInput(this.value) ? this.style.backgroundColor = '' : this.style.backgroundColor='lightcoral'" />
+                <label id="descriptionLabel">Beschreibung</label>
+                <textarea id="descriptionInput" ref="descriptionInput" name="description" v-model="formEntry.description"></textarea>
+                <p id="errorMsg" v-if="formError">Überprüfen Sie Ihre Eingabe.</p>
+                <button id="confirmBtn" type="button" v-on:click="confirmDialog">Bestätigen</button>
+            </form>
+        </dialog>
+        <main>
+            <div>
+                <button id="openFormBtn" v-on:click="createEntry">Neuen Eintrag erstellen</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th onclick="sortElements('id')">ID</th>
+                            <th onclick="sortElements('name')">Name</th>
+                            <th onclick="sortElements('price')">Preis</th>
+                            <th onclick="sortElements('description')">Beschreibung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr is="product" v-if="!isShowingSpecific" v-for="entry in entries" v-bind:propentry="entry" v-on:commit-delete-entry="deleteEntry" v-on:commit-modify-entry="openForm"></tr>
+                        <tr is="product" v-if="isShowingSpecific" v-for="entry in specificEntry" v-bind:propentry="entry" v-on:commit-delete-entry="deleteEntry" v-on:commit-modify-entry="openForm"></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
